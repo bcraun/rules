@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApplication1
 {
-    public interface IPreRuleHandler<in TRequest>
+    public interface IPointRulePreHandler<in TRequest>
     {
         void Handle(TRequest request);
     }

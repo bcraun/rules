@@ -47,19 +47,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseCondition.cs" />
-    <Compile Include="BaseRule.cs" />
-    <Compile Include="ICondition.cs" />
-    <Compile Include="IntegerGreaterThanCondition.cs" />
-    <Compile Include="IPostRuleHandler.cs" />
-    <Compile Include="IPreRuleHandler.cs" />
-    <Compile Include="IRule.cs" />
-    <Compile Include="IRuleHandler.cs" />
-    <Compile Include="PostHandler.cs" />
-    <Compile Include="PreHandler.cs" />
+    <Compile Include="Handlers\IPointConfigurationProvider.cs" />
+    <Compile Include="PointConfiguration.cs" />
+    <Compile Include="Handlers\ServiceFabricPointConfigurationProvider.cs" />
+    <Compile Include="RuleEngine\DoubleEqualToCondition.cs" />
+    <Compile Include="RuleEngine\DoubleEqualToRuleFactory.cs" />
+    <Compile Include="RuleEngine\DoubleGreaterThanCondition.cs" />
+    <Compile Include="RuleEngine\DoubleGreaterThanEqualToRule.cs" />
+    <Compile Include="RuleEngine\DoubleGreaterThanEqualToRuleFactory.cs" />
+    <Compile Include="RuleEngine\IntegerLessThanRuleFactory.cs" />
+    <Compile Include="Interfaces\IRuleFactory.cs" />
+    <Compile Include="PointRules\PointAlarmRuleRequest.cs" />
+    <Compile Include="PointRules\PointValueChangedRuleRequest.cs" />
+    <Compile Include="PointRules\PointWarningRuleRequest.cs" />
+    <Compile Include="Interfaces\IRuleEngine.cs" />
+    <Compile Include="Interfaces\RuleEngine.cs" />
+    <Compile Include="Interfaces\IRequest.cs" />
+    <Compile Include="PointRuleMediatorPipeline.cs" />
+    <Compile Include="RuleEngine\RuleRequest.cs" />
+    <Compile Include="RuleEngine\RuleResponse.cs" />
+    <Compile Include="RuleEngine\BaseCondition.cs" />
+    <Compile Include="RuleEngine\BaseRule.cs" />
+    <Compile Include="Handlers\PointRulePostHandler.cs" />
+    <Compile Include="Handlers\PointPointRulePreHandler.cs" />
+    <Compile Include="Handlers\PointAlarmRuleHandler.cs" />
+    <Compile Include="Interfaces\ICondition.cs" />
+    <Compile Include="RuleEngine\IntegerGreaterThanCondition.cs" />
+    <Compile Include="RuleEngine\IntegerGreaterThanRule.cs" />
+    <Compile Include="Interfaces\IPointRulePostHandler.cs" />
+    <Compile Include="Interfaces\IPointRulePreHandler.cs" />
+    <Compile Include="Interfaces\IRule.cs" />
+    <Compile Include="Interfaces\IPointRuleHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RuleHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
