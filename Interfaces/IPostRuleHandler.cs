@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApplication1
 {
-    public interface IPostRuleHandler<in TRuleExecutor, in TResponse>
+    public interface IPostRuleHandler<TRuleExecutor, TResponse>
     {
         void Handle(
             TRuleExecutor executor, 

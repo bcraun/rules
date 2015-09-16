@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot\Bootstrapper.cs" />
+    <Compile Include="RuleEngine\DoubleRuleEngineFactory.cs" />
     <Compile Include="RuleHandlers\DigitalFallingEdgeRuleHandler.cs" />
     <Compile Include="RuleHandlers\HighWarningPostRuleHandler.cs" />
     <Compile Include="RuleHandlers\HighWarningPreRuleHandler.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApplication1
 {
-    public interface IRuleHandler<in TRuleExecutor, out TResponse>
+    public interface IRuleHandler<TRuleExecutor, TResponse>
         where TRuleExecutor : IRuleExecutor
     {
         TResponse Handle(

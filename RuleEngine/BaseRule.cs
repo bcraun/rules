@@ -79,37 +79,12 @@ namespace ConsoleApplication1
         }
 
         /// <summary>
-        /// Matcheses any of the rules.
+        /// Matches any of the rules.
         /// </summary>
         /// <returns><c>true</c> if any of the conditions are met for the specified value</returns>
         protected bool MatchesAnyCondition()
         {
-            // We could use a lambda for ease, however in my case this project 
-            // is to be used by Unity 3D so we will need to be aware that some 
-            // Linq features are not available in all target langauges.
-            //return Conditions.Any(rule => rule.IsSatisfied);
-
-            // Assume the conditions are NOT valid until proven otherwise
-            bool isValid = false;
-
-            // Start checking the conditions for any failures
-            foreach (ICondition<T> condition in Conditions)
-            {
-                // Set the value
-                condition.Value = Value;
-
-                if (condition.IsSatisfied)
-                {
-                    // We have a pass so set flag...
-                    isValid = true;
-
-                    // ...and bail out of the loop for performance
-                    break;
-                }
-            }
-
-            // return the result
-            return isValid;
+            return Conditions.Any(rule => rule.IsSatisfied);
         }
     }
 }

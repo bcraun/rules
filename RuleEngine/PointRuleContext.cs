@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 
 namespace ConsoleApplication1
@@ -10,6 +11,12 @@ namespace ConsoleApplication1
 
         [DataMember]
         public int PointId { get; set; }
+
+        [DataMember]
+        public bool InAlarm { get; set; }
+
+        [DataMember]
+        public DateTime LastReceiveUTC { get; set; }
 
         [DataMember]
         public double CurrentValue { get; set; }

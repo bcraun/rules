@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApplication1
 {
-    public interface IPreRuleHandler<in TRuleExecutor>
+    public interface IPreRuleHandler<TRuleExecutor>
     {
         void Handle(
             TRuleExecutor executor, 
