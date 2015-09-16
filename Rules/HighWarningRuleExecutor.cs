@@ -2,21 +2,21 @@
 
 namespace ConsoleApplication1
 {
-    public class DigitalRisingEdgeRuleExecutor : IRuleExecutor
+    public class HighWarningRuleExecutor : IRuleExecutor
     {
         public IRuleFactory<double>[] RuleFactory { get; set; }
 
-        public DigitalRisingEdgeRuleExecutor(IRuleFactory<double>[] ruleFactory)
+        public HighWarningRuleExecutor(IRuleFactory<double>[] ruleFactory)
         {
             RuleFactory = ruleFactory;
         }
 
-        public RuleExecutionResponse ExecuteRule(IRuleContext context)
+        public RuleExecutionResponse ExecuteRule(IRuleContext<double> context)
         {
-            var pointContext = (DoubleRuleContext)context;
+            var pointContext = (DoubleRuleContext) context;
 
             double actual = pointContext.CurrentValue;
-            double threshold = pointContext.PreviousValue;
+            double threshold = pointContext.HighWarningValue;
 
             var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleGreaterThanRuleFactory)).MakeRule(threshold);
 

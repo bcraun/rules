@@ -19,7 +19,7 @@ namespace ConsoleApplication1
             _rulePostHandlers = rulePostHandlers;
         }
 
-        public TResponse Handle(TRequest message, IRuleContext context)
+        public TResponse Handle(TRequest message, IRuleContext<double> context)
         {
             foreach (var preRequestHandler in _rulePreHandlers)
             {

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace ConsoleApplication1
 {
     [DataContract]
-    public class DoubleRuleContext : IRuleContext
+    public class DoubleRuleContext : IRuleContext<double>
     {
         [DataMember]
         public string Key { get; set; }

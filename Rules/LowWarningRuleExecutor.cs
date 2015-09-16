@@ -11,7 +11,7 @@ namespace ConsoleApplication1
             RuleFactory = ruleFactory;
         }
 
-        public RuleExecutionResponse ExecuteRule(IRuleContext context)
+        public RuleExecutionResponse ExecuteRule(IRuleContext<double> context)
         {
             var pointContext = (DoubleRuleContext)context;
 

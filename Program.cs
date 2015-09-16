@@ -12,22 +12,22 @@ namespace ConsoleApplication1
         {
             _container = Bootstrapper.Compose();
 
-            // Test the high alarm rules
+            // Test the high alarm rule
             ExecuteHighAlarmRules();
 
-            // Test the low alarm rules
+            // Test the low alarm rule
             ExecuteLowAlarmRules();
-
-            // Test the high warning rules
+        
+            // Test the high warning rule
             ExecuteHighWarningRules();
 
-            // Test the low warning rules
+            // Test the low warning rule
             ExecuteLowWarningRules();
 
-            // Test the rising edge changed rules
+            // Test the rising edge rule
             ExecuteDigitalRisingEdgeRules();
 
-            // Test the falling edge changed rules
+            // Test the falling edge rule
             ExecuteDigitalFallingEdgeRules();
         }
 
@@ -108,7 +108,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteDigitalRisingEdgeRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", CurrentValue = 0, PreviousValue = 1 };
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", AlarmOnOne = true, CurrentValue = 0, PreviousValue = 1 };
 
             var risingEdgeHandler =
                 _container
@@ -127,7 +127,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteDigitalFallingEdgeRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", CurrentValue = 1, PreviousValue = 0 };
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", AlarmOnZero = true, CurrentValue = 1, PreviousValue = 0 };
 
             var fallingEdgeHandler =
                 _container

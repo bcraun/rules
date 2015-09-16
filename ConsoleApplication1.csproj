@@ -64,9 +64,9 @@
     <Compile Include="Interfaces\IRuleContext.cs" />
     <Compile Include="DoubleRuleContext.cs" />
     <Compile Include="RuleContextProvider.cs" />
-    <Compile Include="PointRules\DigitalFallingEdgeRuleExecutor.cs" />
-    <Compile Include="PointRules\LowAlarmRuleExecutor.cs" />
-    <Compile Include="PointRules\LowWarningRuleExecutor.cs" />
+    <Compile Include="Rules\DigitalFallingEdgeRuleExecutor.cs" />
+    <Compile Include="Rules\LowAlarmRuleExecutor.cs" />
+    <Compile Include="Rules\LowWarningRuleExecutor.cs" />
     <Compile Include="RuleEngine\DoubleEqualToCondition.cs" />
     <Compile Include="RuleEngine\DoubleEqualToRule.cs" />
     <Compile Include="RuleEngine\DoubleEqualToRuleFactory.cs" />
@@ -80,9 +80,9 @@
     <Compile Include="RuleEngine\DoubleLessThanRuleFactory.cs" />
     <Compile Include="RuleEngine\IntegerLessThanRuleFactory.cs" />
     <Compile Include="Interfaces\IRuleFactory.cs" />
-    <Compile Include="PointRules\HighAlarmRuleExecutor.cs" />
-    <Compile Include="PointRules\DigitalRisingEdgeRuleExecutor.cs" />
-    <Compile Include="PointRules\HighWarningRuleExecutor.cs" />
+    <Compile Include="Rules\HighAlarmRuleExecutor.cs" />
+    <Compile Include="Rules\DigitalRisingEdgeRuleExecutor.cs" />
+    <Compile Include="Rules\HighWarningRuleExecutor.cs" />
     <Compile Include="Interfaces\IRuleEngine.cs" />
     <Compile Include="Interfaces\RuleEngine.cs" />
     <Compile Include="Interfaces\IRuleExecutor.cs" />

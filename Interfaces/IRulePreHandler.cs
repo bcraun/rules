@@ -2,6 +2,6 @@
 {
     public interface IRulePreHandler<in TRequest>
     {
-        void Handle(TRequest request, IRuleContext context);
+        void Handle(TRequest request, IRuleContext<double> context);
     }
 }

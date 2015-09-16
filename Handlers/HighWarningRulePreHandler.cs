@@ -2,7 +2,7 @@
 {
     public class HighWarningRulePreHandler : IRulePreHandler<HighWarningRuleExecutor>
     {
-        public void Handle(HighWarningRuleExecutor message, IRuleContext context)
+        public void Handle(HighWarningRuleExecutor message, IRuleContext<double> context)
         {
         }
     }

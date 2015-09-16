@@ -2,7 +2,7 @@
 {
     public class LowAlarmRulePreHandler : IRulePreHandler<LowAlarmRuleExecutor>
     {
-        public void Handle(LowAlarmRuleExecutor message, IRuleContext context)
+        public void Handle(LowAlarmRuleExecutor message, IRuleContext<double> context)
         {
         }
     }

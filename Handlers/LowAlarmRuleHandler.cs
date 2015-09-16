@@ -2,9 +2,16 @@ namespace ConsoleApplication1
 {
     public class LowAlarmRuleHandler : IRuleHandler<LowAlarmRuleExecutor, RuleExecutionResponse>
     {
-        public RuleExecutionResponse Handle(LowAlarmRuleExecutor message, IRuleContext context)
+        public RuleExecutionResponse Handle(LowAlarmRuleExecutor message, IRuleContext<double> context)
         {
-            return message.ExecuteRule(context);
+            var ctx = (DoubleRuleContext)context;
+
+            if (ctx.LowAlarmEnabled)
+            {
+                return message.ExecuteRule(context);
+            }
+
+            return default(RuleExecutionResponse);
         }
     }
 }

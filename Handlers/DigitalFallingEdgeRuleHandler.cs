@@ -2,9 +2,16 @@ namespace ConsoleApplication1
 {
     public class DigitalFallingEdgeRuleHandler : IRuleHandler<DigitalFallingEdgeRuleExecutor, RuleExecutionResponse>
     {
-        public RuleExecutionResponse Handle(DigitalFallingEdgeRuleExecutor message, IRuleContext context)
+        public RuleExecutionResponse Handle(DigitalFallingEdgeRuleExecutor message, IRuleContext<double> context)
         {
-            return message.ExecuteRule(context);
+            var ctx = (DoubleRuleContext) context;
+
+            if (ctx.AlarmOnZero)
+            {
+                return message.ExecuteRule(context);
+            }
+
+            return default(RuleExecutionResponse);
         }
     }
 }
