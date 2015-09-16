@@ -33,7 +33,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteHighAlarmRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", HighAlarmEnabled = true, CurrentValue = 39.543, HighAlarmValue = 32.532 };
+            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, HighAlarmEnabled = true, CurrentValue = 39.543, HighAlarmValue = 32.532 };
 
             var highAlarmHandler =
                 _container.GetAllInstances(typeof(IRuleHandler<HighAlarmRuleExecutor, RuleExecutionResponse>))
@@ -51,7 +51,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteLowAlarmRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", LowAlarmEnabled = true, CurrentValue = 42.890, LowAlarmValue = 43.234 };
+            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, LowAlarmEnabled = true, CurrentValue = 42.890, LowAlarmValue = 43.234 };
 
             var lowAlarmHandler =
                 _container
@@ -70,7 +70,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteHighWarningRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", HighWarningEnabled = true, CurrentValue = 65.435, HighWarningValue = 43.907 };
+            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, HighWarningEnabled = true, CurrentValue = 65.435, HighWarningValue = 43.907 };
 
             var highWarningHandler =
                 _container
@@ -89,7 +89,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteLowWarningRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", LowWarningEnabled = true, CurrentValue = 79.435, LowWarningValue = 43.123 };
+            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, LowWarningEnabled = true, CurrentValue = 79.435, LowWarningValue = 43.123 };
 
             var lowWarningHandler =
                 _container
@@ -108,7 +108,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteDigitalRisingEdgeRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", AlarmOnOne = true, CurrentValue = 0, PreviousValue = 1 };
+            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, AlarmOnOne = true, CurrentValue = 0, PreviousValue = 1 };
 
             var risingEdgeHandler =
                 _container
@@ -127,7 +127,7 @@ namespace ConsoleApplication1
 
         private static void ExecuteDigitalFallingEdgeRules()
         {
-            var context = new DoubleRuleContext { Key = "432234145142314_8973", AlarmOnZero = true, CurrentValue = 1, PreviousValue = 0 };
+            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, AlarmOnZero = true, CurrentValue = 1, PreviousValue = 0 };
 
             var fallingEdgeHandler =
                 _container

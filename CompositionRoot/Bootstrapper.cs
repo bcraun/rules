@@ -9,12 +9,12 @@ namespace ConsoleApplication1.CompositionRoot
         {
             var container = new Container();
 
-            container.RegisterCollection(typeof(IRulePreHandler<>), AppDomain.CurrentDomain.GetAssemblies());
+            container.Register(typeof(IRuleEngineFactory<>), typeof(DoubleRuleEngineFactory));
+            container.RegisterCollection(typeof(IPreRuleHandler<>), AppDomain.CurrentDomain.GetAssemblies());
             container.RegisterCollection(typeof(IRuleHandler<,>), AppDomain.CurrentDomain.GetAssemblies());
-            container.RegisterCollection(typeof(IRulePostHandler<,>), AppDomain.CurrentDomain.GetAssemblies());
+            container.RegisterCollection(typeof(IPostRuleHandler<,>), AppDomain.CurrentDomain.GetAssemblies());
             container.RegisterCollection(typeof(IRuleExecutor), AppDomain.CurrentDomain.GetAssemblies());
             container.RegisterCollection(typeof(IRuleFactory<>), AppDomain.CurrentDomain.GetAssemblies());
-            container.Register(typeof(IRuleContextProvider), typeof(RuleContextProvider));
 
             container.RegisterDecorator(typeof(IRuleHandler<,>), typeof(RuleMediatorPipeline<,>));
 

@@ -3,10 +3,13 @@ using System.Runtime.Serialization;
 namespace ConsoleApplication1
 {
     [DataContract]
-    public class DoubleRuleContext : IRuleContext<double>
+    public class PointRuleContext : IRuleContext<double>
     {
         [DataMember]
         public string Key { get; set; }
+
+        [DataMember]
+        public int PointId { get; set; }
 
         [DataMember]
         public double CurrentValue { get; set; }

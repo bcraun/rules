@@ -4,36 +4,42 @@ namespace ConsoleApplication1
         : IRuleHandler<TRequest, TResponse>
         where TRequest : IRuleExecutor
     {
-        private readonly IRulePreHandler<TRequest>[] _rulePreHandlers;
+        private readonly IPreRuleHandler<TRequest>[] _preRuleHandlers;
         private readonly IRuleHandler<TRequest, TResponse> _inner;
-        private readonly IRulePostHandler<TRequest, TResponse>[] _rulePostHandlers;
+        private readonly IPostRuleHandler<TRequest, TResponse>[] _postRuleHandlers;
 
         public RuleMediatorPipeline(
             IRuleHandler<TRequest, TResponse> inner,
-            IRulePreHandler<TRequest>[] rulePreHandlers,
-            IRulePostHandler<TRequest, TResponse>[] rulePostHandlers
+            IPreRuleHandler<TRequest>[] preRuleHandlers,
+            IPostRuleHandler<TRequest, TResponse>[] postRuleHandlers
             )
         {
             _inner = inner;
-            _rulePreHandlers = rulePreHandlers;
-            _rulePostHandlers = rulePostHandlers;
+            _preRuleHandlers = preRuleHandlers;
+            _postRuleHandlers = postRuleHandlers;
         }
 
-        public TResponse Handle(TRequest message, IRuleContext<double> context)
+        public TResponse Handle(TRequest executor, IRuleContext<double> context)
         {
-            foreach (var preRequestHandler in _rulePreHandlers)
+            var ctx = (PointRuleContext)context;
+
+            if (ctx.IsEnabled)
             {
-                preRequestHandler.Handle(message, context);
+                foreach (var preRequestHandler in _preRuleHandlers)
+                {
+                    preRequestHandler.Handle(executor, context);
+                }
+
+                var result = _inner.Handle(executor, context);
+
+                foreach (var postRequestHandler in _postRuleHandlers)
+                {
+                    postRequestHandler.Handle(executor, context, result);
+                }
+
+                return result;
             }
-
-            var result = _inner.Handle(message, context);
-
-            foreach (var postRequestHandler in _rulePostHandlers)
-            {
-                postRequestHandler.Handle(message, context, result);
-            }
-
-            return result;
+            return default(TResponse);
         }
     }
 }
