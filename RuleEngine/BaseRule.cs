@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApplication1
 {
@@ -74,32 +75,7 @@ namespace ConsoleApplication1
         /// <returns><c>true</c> if all of the conditions are met for the specified value</returns>
         protected bool MatchAllConditions()
         {
-            // We could use a lambda for ease, however in my case this project 
-            // is to be used by Unity 3D so we will need to be aware that some 
-            // Linq features are not available in all target langauges.
-            //return Conditions.All(rule => rule.IsSatisfied);
-
-            // Assume the conditions are all valid until proven otherwise
-            bool isValid = true;
-
-            // Start checking the conditions for any failures
-            foreach (ICondition<T> condition in Conditions)
-            {
-                // Set the value
-                condition.Value = Value;
-
-                if (!condition.IsSatisfied)
-                {
-                    // We have a failure so set flag...
-                    isValid = false;
-
-                    // ...and bail out of the loop for performance
-                    break;
-                }
-            }
-
-            // return the result
-            return isValid;
+            return Conditions.All(rule => rule.IsSatisfied);
         }
 
         /// <summary>

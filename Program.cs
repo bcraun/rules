@@ -1,57 +1,147 @@
 ﻿using System;
 using System.Linq;
+using ConsoleApplication1.CompositionRoot;
 using SimpleInjector;
 
 namespace ConsoleApplication1
 {
     internal class Program
     {
+        private static Container _container;
         private static void Main()
         {
-            var container = new Container();
+            _container = Bootstrapper.Compose();
 
-            container.RegisterCollection(typeof (IPointRulePreHandler<>), AppDomain.CurrentDomain.GetAssemblies());
-            container.RegisterCollection(typeof (IPointRuleHandler<,>), AppDomain.CurrentDomain.GetAssemblies());
-            container.RegisterCollection(typeof (IPointRulePostHandler<,>), AppDomain.CurrentDomain.GetAssemblies());
-            container.RegisterCollection(typeof (IRequest<>), AppDomain.CurrentDomain.GetAssemblies());
-            container.RegisterCollection(typeof (IRuleFactory<>), AppDomain.CurrentDomain.GetAssemblies());
-            container.Register(typeof (IPointConfigurationProvider), typeof(ServiceFabricPointConfigurationProvider));
+            // Test the high alarm rules
+            ExecuteHighAlarmRules();
 
-            container.RegisterDecorator(typeof (IPointRuleHandler<,>), typeof (PointRuleMediatorPipeline<,>));
+            // Test the low alarm rules
+            ExecuteLowAlarmRules();
 
-            container.Verify(VerificationOption.VerifyAndDiagnose);
+            // Test the high warning rules
+            ExecuteHighWarningRules();
 
-            // Test point value changed rule
-            var pointWarningHandler =
-                container.GetAllInstances(typeof (IPointRuleHandler<PointWarningRuleRequest, RuleResponse>))
-                    .Cast<IPointRuleHandler<PointWarningRuleRequest, RuleResponse>>()
+            // Test the low warning rules
+            ExecuteLowWarningRules();
+
+            // Test the rising edge changed rules
+            ExecuteDigitalRisingEdgeRules();
+
+            // Test the falling edge changed rules
+            ExecuteDigitalFallingEdgeRules();
+        }
+
+        private static void ExecuteHighAlarmRules()
+        {
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", HighAlarmEnabled = true, CurrentValue = 39.543, HighAlarmValue = 32.532 };
+
+            var highAlarmHandler =
+                _container.GetAllInstances(typeof(IRuleHandler<HighAlarmRuleExecutor, RuleExecutionResponse>))
+                    .Cast<IRuleHandler<HighAlarmRuleExecutor, RuleExecutionResponse>>()
                     .First();
-            var pointWarningRequest =
-                (PointWarningRuleRequest)
-                    container.GetAllInstances(typeof(IRequest<RuleResponse>))
-                        .First(i => i.GetType() == typeof(PointWarningRuleRequest));
-            Console.WriteLine($"[50.034 >= 323.23] --> {pointWarningHandler.Handle(pointWarningRequest).Result}\n");
+            var highAlarmRuleExecutor =
+                (HighAlarmRuleExecutor)
+                    _container
+                        .GetAllInstances(typeof(IRuleExecutor))
+                        .First(i => i.GetType() == typeof(HighAlarmRuleExecutor));
 
-            var pointValueChangedHandler =
-                container.GetAllInstances(typeof (IPointRuleHandler<PointValueChangedRuleRequest, RuleResponse>))
-                    .Cast<IPointRuleHandler<PointValueChangedRuleRequest, RuleResponse>>()
-                    .First();
-            var pointValueChangedRequest =
-                (PointValueChangedRuleRequest)
-                    container.GetAllInstances(typeof (IRequest<RuleResponse>))
-                        .First(i => i.GetType() == typeof (PointValueChangedRuleRequest));
-            Console.WriteLine($"[23.3213 == 23.3214] --> {pointValueChangedHandler.Handle(pointValueChangedRequest).Result}\n");
+            // Returns whether the current value is greater than the threshold value
+            Console.WriteLine($"[{context.HighAlarmValue} < {context.CurrentValue}] --> {highAlarmHandler.Handle(highAlarmRuleExecutor, context).Result}\n");
+        }
 
-            // Test point alarm rule
-            var pointAlarmHandler =
-                container.GetAllInstances(typeof (IPointRuleHandler<PointAlarmRuleRequest, RuleResponse>))
-                    .Cast<IPointRuleHandler<PointAlarmRuleRequest, RuleResponse>>()
+        private static void ExecuteLowAlarmRules()
+        {
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", LowAlarmEnabled = true, CurrentValue = 42.890, LowAlarmValue = 43.234 };
+
+            var lowAlarmHandler =
+                _container
+                    .GetAllInstances(typeof(IRuleHandler<LowAlarmRuleExecutor, RuleExecutionResponse>))
+                    .Cast<IRuleHandler<LowAlarmRuleExecutor, RuleExecutionResponse>>()
                     .First();
-            var pointAlarmRuleRequest =
-                (PointAlarmRuleRequest)
-                    container.GetAllInstances(typeof (IRequest<RuleResponse>))
-                        .First(i => i.GetType() == typeof (PointAlarmRuleRequest));
-            Console.WriteLine($"[43.324 >= 23.3214] --> {pointAlarmHandler.Handle(pointAlarmRuleRequest).Result}\n");
+            var lowAlarmRuleExecutor =
+                (LowAlarmRuleExecutor)
+                    _container
+                        .GetAllInstances(typeof(IRuleExecutor))
+                        .First(i => i.GetType() == typeof(LowAlarmRuleExecutor));
+
+            // Returns whether the threshold value is less than the current value
+            Console.WriteLine($"[{context.LowAlarmValue} < {context.CurrentValue}] --> {lowAlarmHandler.Handle(lowAlarmRuleExecutor, context).Result}\n");
+        }
+
+        private static void ExecuteHighWarningRules()
+        {
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", HighWarningEnabled = true, CurrentValue = 65.435, HighWarningValue = 43.907 };
+
+            var highWarningHandler =
+                _container
+                    .GetAllInstances(typeof(IRuleHandler<HighWarningRuleExecutor, RuleExecutionResponse>))
+                    .Cast<IRuleHandler<HighWarningRuleExecutor, RuleExecutionResponse>>()
+                    .First();
+            var highWarningRuleExecutor =
+                (HighWarningRuleExecutor)
+                    _container
+                        .GetAllInstances(typeof(IRuleExecutor))
+                        .First(i => i.GetType() == typeof(HighWarningRuleExecutor));
+
+            // Returns whether the current value is greater than the threshold value
+            Console.WriteLine($"[{context.HighWarningValue} < {context.CurrentValue}] --> {highWarningHandler.Handle(highWarningRuleExecutor, context).Result}\n");
+        }
+
+        private static void ExecuteLowWarningRules()
+        {
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", LowWarningEnabled = true, CurrentValue = 79.435, LowWarningValue = 43.123 };
+
+            var lowWarningHandler =
+                _container
+                    .GetAllInstances(typeof(IRuleHandler<LowWarningRuleExecutor, RuleExecutionResponse>))
+                    .Cast<IRuleHandler<LowWarningRuleExecutor, RuleExecutionResponse>>()
+                    .First();
+            var lowWarningRuleExecutor =
+                (LowWarningRuleExecutor)
+                    _container
+                        .GetAllInstances(typeof(IRuleExecutor))
+                        .First(i => i.GetType() == typeof(LowWarningRuleExecutor));
+
+            // Returns whether the threshold value is less than the current value
+            Console.WriteLine($"[{context.LowWarningValue} < {context.CurrentValue}] --> {lowWarningHandler.Handle(lowWarningRuleExecutor, context).Result}\n");
+        }
+
+        private static void ExecuteDigitalRisingEdgeRules()
+        {
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", CurrentValue = 0, PreviousValue = 1 };
+
+            var risingEdgeHandler =
+                _container
+                    .GetAllInstances(typeof(IRuleHandler<DigitalRisingEdgeRuleExecutor, RuleExecutionResponse>))
+                    .Cast<IRuleHandler<DigitalRisingEdgeRuleExecutor, RuleExecutionResponse>>()
+                    .First();
+            var risingEdgeRuleExecutor =
+                (DigitalRisingEdgeRuleExecutor)
+                    _container
+                        .GetAllInstances(typeof(IRuleExecutor))
+                        .First(i => i.GetType() == typeof(DigitalRisingEdgeRuleExecutor));
+
+            // Returns whether the current value is greater than the previous value
+            Console.WriteLine($"[{context.PreviousValue} < {context.CurrentValue}] --> {risingEdgeHandler.Handle(risingEdgeRuleExecutor, context).Result}\n");
+        }
+
+        private static void ExecuteDigitalFallingEdgeRules()
+        {
+            var context = new DoubleRuleContext { Key = "432234145142314_8973", CurrentValue = 1, PreviousValue = 0 };
+
+            var fallingEdgeHandler =
+                _container
+                    .GetAllInstances(typeof(IRuleHandler<DigitalFallingEdgeRuleExecutor, RuleExecutionResponse>))
+                    .Cast<IRuleHandler<DigitalFallingEdgeRuleExecutor, RuleExecutionResponse>>()
+                    .First();
+            var fallingEdgeRuleExecutor =
+                (DigitalFallingEdgeRuleExecutor)
+                    _container
+                        .GetAllInstances(typeof(IRuleExecutor))
+                        .First(i => i.GetType() == typeof(DigitalFallingEdgeRuleExecutor));
+
+            // Returns whether the current value is less than the previous value
+            Console.WriteLine($"[{context.PreviousValue} < {context.CurrentValue}] --> {fallingEdgeHandler.Handle(fallingEdgeRuleExecutor, context).Result}\n");
         }
     }
 }

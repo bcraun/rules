@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApplication1
 {
-    public class RuleResponse : IRequest<bool>
+    public class RuleExecutionResponse : IRuleExecutor
     {
         public bool Result { get; set; }
     }

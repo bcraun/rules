@@ -1,12 +1,12 @@
 namespace ConsoleApplication1
 {
-    public class DoubleGreaterThanEqualToRule : BaseRule<double>
+    public class DoubleGreaterThanRule : BaseRule<double>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DoubleGreaterThanEqualToRule"/> class.
         /// </summary>
         /// <param name="threshold">The threshold.</param>
-        public DoubleGreaterThanEqualToRule(double threshold)
+        public DoubleGreaterThanRule(double threshold)
             : base(threshold)
         {
             Initialize();
@@ -21,12 +21,10 @@ namespace ConsoleApplication1
             ClearConditions();
 
             // Create our conditions
-            var condition1 = new DoubleGreaterThanCondition(Threshold);
-            var condition2 = new DoubleEqualToCondition(Threshold);
+            var condition = new DoubleGreaterThanCondition(Threshold);
 
             // ...and add them to our collection of conditions
-            Conditions.Add(condition1);
-            Conditions.Add(condition2);
+            Conditions.Add(condition);
         }
 
         /// <summary>
