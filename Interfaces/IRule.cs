@@ -1,5 +1,8 @@
 namespace ConsoleApplication1
 {
+    /// <summary>
+    /// Defines the expected members of a Rule object
+    /// </summary>
     public interface IRule<T>
     {
         /// <summary>

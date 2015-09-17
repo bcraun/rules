@@ -8,8 +8,8 @@ namespace ConsoleApplication1
             IRuleContext<double> context)
         {
             return ((PointRuleContext)context).HighAlarmEnabled ? 
-                executor.ExecuteRule(context) : 
-                default(RuleExecutionResponse);
+                executor.ExecuteRule(context) :
+                new RuleExecutionResponse { CurrentState = CurrentStateType.Disabled };
         }
     }
 }

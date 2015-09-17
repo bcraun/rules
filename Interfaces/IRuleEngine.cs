@@ -12,7 +12,7 @@
         bool MatchAllRules();
 
         /// <summary>
-        /// Matches any rule.
+        /// Matcheses any rule.
         /// </summary>
         /// <returns></returns>
         bool MatchesAnyRule();

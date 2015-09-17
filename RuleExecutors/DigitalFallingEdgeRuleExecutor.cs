@@ -20,14 +20,21 @@ namespace ConsoleApplication1
             var pointContext = (PointRuleContext)context;
 
             double actual = pointContext.CurrentValue;
-            double threshold = pointContext.PreviousValue;
+            double previous = pointContext.PreviousValue;
 
-            var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleLessThanRuleFactory)).Make(threshold);
+            var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleLessThanRuleFactory)).Make(previous);
 
             var ruleEngine = _engineFactory.Make(actual);
             ruleEngine.Add(rule);
 
-            return new RuleExecutionResponse { Result = ruleEngine.MatchAny() };
+            var result = new RuleExecutionResponse();
+            // TODO: Interpret the result and update the RuleExecutionResponse enum
+            if (ruleEngine.MatchAny())
+            {
+                result.CurrentState = CurrentStateType.DigitalFallingEdgeDetect;
+            }
+
+            return result;
         }
     }
 }

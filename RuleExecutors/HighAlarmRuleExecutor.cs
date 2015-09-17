@@ -24,10 +24,17 @@ namespace ConsoleApplication1
 
             var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleGreaterThanRuleFactory)).Make(threshold);
 
-            var integerRuleEngine = _engineFactory.Make(actual);
-            integerRuleEngine.Add(rule);
+            var ruleEngine = _engineFactory.Make(actual);
+            ruleEngine.Add(rule);
 
-            return new RuleExecutionResponse { Result = integerRuleEngine.MatchAny() };
+            var result = new RuleExecutionResponse();
+            // TODO: Interpret the result and update the RuleExecutionResponse enum
+            if (ruleEngine.MatchAny())
+            {
+                result.CurrentState = CurrentStateType.HighAlarm;
+            }
+
+            return result;
         }
     }
 }

@@ -12,29 +12,62 @@ namespace ConsoleApplication1
         {
             _container = Bootstrapper.Compose();
 
-            // Test the high alarm rule
-            ExecuteHighAlarmRules();
+            var analogContext = new PointRuleContext
+            {
+                Key = "432234145142314_8973",
+                // TODO: Fix the runtime exception when point is disabled and 
+                // TODO: mediator pipeline returns default(RuleExecutionResult)
+                IsEnabled = true,
+                HighAlarmEnabled = true,
+                LowAlarmEnabled = true,
+                HighWarningEnabled = true,
+                LowWarningEnabled = true,
+                CurrentValue = 105.543,
+                HighAlarmValue = 100.532,
+                HighWarningValue = 50.907,
+                LowWarningValue = 25.123,
+                LowAlarmValue = 5.234
+            };
 
-            // Test the low alarm rule
-            ExecuteLowAlarmRules();
-        
+            // Test the high alarm rule
+            ExecuteHighAlarmRules(analogContext);
+
             // Test the high warning rule
-            ExecuteHighWarningRules();
+            ExecuteHighWarningRules(analogContext);
 
             // Test the low warning rule
-            ExecuteLowWarningRules();
+            ExecuteLowWarningRules(analogContext);
+
+            // Test the low alarm rule
+            ExecuteLowAlarmRules(analogContext);
+
+            var digitalContextRising = new PointRuleContext
+            {
+                Key = "432234145142314_8973",
+                IsEnabled = true,
+                AlarmOnOne = true,
+                CurrentValue = 1,
+                PreviousValue = 0
+            };
 
             // Test the rising edge rule
-            ExecuteDigitalRisingEdgeRules();
+            ExecuteDigitalRisingEdgeRules(digitalContextRising);
+
+            var digitalContextFalling = new PointRuleContext
+            {
+                Key = "432234145142314_8973",
+                IsEnabled = true,
+                AlarmOnZero = true,
+                CurrentValue = 0,
+                PreviousValue = 1
+            };
 
             // Test the falling edge rule
-            ExecuteDigitalFallingEdgeRules();
+            ExecuteDigitalFallingEdgeRules(digitalContextFalling);
         }
 
-        private static void ExecuteHighAlarmRules()
+        private static void ExecuteHighAlarmRules(PointRuleContext analogContext)
         {
-            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, HighAlarmEnabled = true, CurrentValue = 39.543, HighAlarmValue = 32.532 };
-
             var highAlarmHandler =
                 _container.GetAllInstances(typeof(IRuleHandler<HighAlarmRuleExecutor, RuleExecutionResponse>))
                     .Cast<IRuleHandler<HighAlarmRuleExecutor, RuleExecutionResponse>>()
@@ -46,13 +79,11 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(HighAlarmRuleExecutor));
 
             // Returns whether the current value is greater than the threshold value
-            Console.WriteLine($"[{context.HighAlarmValue} < {context.CurrentValue}] --> {highAlarmHandler.Handle(highAlarmRuleExecutor, context).Result}\n");
+            Console.WriteLine($"High Alarm (threshold/cur) [{analogContext.HighAlarmValue} - {analogContext.ScaledValue}] --> {highAlarmHandler.Handle(highAlarmRuleExecutor, analogContext).CurrentState}\n");
         }
 
-        private static void ExecuteLowAlarmRules()
+        private static void ExecuteLowAlarmRules(PointRuleContext analogContext)
         {
-            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, LowAlarmEnabled = true, CurrentValue = 42.890, LowAlarmValue = 43.234 };
-
             var lowAlarmHandler =
                 _container
                     .GetAllInstances(typeof(IRuleHandler<LowAlarmRuleExecutor, RuleExecutionResponse>))
@@ -65,13 +96,11 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(LowAlarmRuleExecutor));
 
             // Returns whether the threshold value is less than the current value
-            Console.WriteLine($"[{context.LowAlarmValue} < {context.CurrentValue}] --> {lowAlarmHandler.Handle(lowAlarmRuleExecutor, context).Result}\n");
+            Console.WriteLine($"Low Alarm (threshold/cur) [{analogContext.LowAlarmValue} - {analogContext.ScaledValue}] --> {lowAlarmHandler.Handle(lowAlarmRuleExecutor, analogContext).CurrentState}\n");
         }
 
-        private static void ExecuteHighWarningRules()
+        private static void ExecuteHighWarningRules(PointRuleContext analogContext)
         {
-            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, HighWarningEnabled = true, CurrentValue = 65.435, HighWarningValue = 43.907 };
-
             var highWarningHandler =
                 _container
                     .GetAllInstances(typeof(IRuleHandler<HighWarningRuleExecutor, RuleExecutionResponse>))
@@ -84,13 +113,11 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(HighWarningRuleExecutor));
 
             // Returns whether the current value is greater than the threshold value
-            Console.WriteLine($"[{context.HighWarningValue} < {context.CurrentValue}] --> {highWarningHandler.Handle(highWarningRuleExecutor, context).Result}\n");
+            Console.WriteLine($"High Warning (threshold/cur) [{analogContext.HighWarningValue} - {analogContext.ScaledValue}] --> {highWarningHandler.Handle(highWarningRuleExecutor, analogContext).CurrentState}\n");
         }
 
-        private static void ExecuteLowWarningRules()
+        private static void ExecuteLowWarningRules(PointRuleContext analogContext)
         {
-            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, LowWarningEnabled = true, CurrentValue = 79.435, LowWarningValue = 43.123 };
-
             var lowWarningHandler =
                 _container
                     .GetAllInstances(typeof(IRuleHandler<LowWarningRuleExecutor, RuleExecutionResponse>))
@@ -103,13 +130,11 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(LowWarningRuleExecutor));
 
             // Returns whether the threshold value is less than the current value
-            Console.WriteLine($"[{context.LowWarningValue} < {context.CurrentValue}] --> {lowWarningHandler.Handle(lowWarningRuleExecutor, context).Result}\n");
+            Console.WriteLine($"Low Warning (threshold/cur) [{analogContext.LowWarningValue} - {analogContext.ScaledValue}] --> {lowWarningHandler.Handle(lowWarningRuleExecutor, analogContext).CurrentState}\n");
         }
 
-        private static void ExecuteDigitalRisingEdgeRules()
+        private static void ExecuteDigitalRisingEdgeRules(PointRuleContext digitalContextRising)
         {
-            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, AlarmOnOne = true, CurrentValue = 0, PreviousValue = 1 };
-
             var risingEdgeHandler =
                 _container
                     .GetAllInstances(typeof(IRuleHandler<DigitalRisingEdgeRuleExecutor, RuleExecutionResponse>))
@@ -122,13 +147,11 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(DigitalRisingEdgeRuleExecutor));
 
             // Returns whether the current value is greater than the previous value
-            Console.WriteLine($"[{context.PreviousValue} < {context.CurrentValue}] --> {risingEdgeHandler.Handle(risingEdgeRuleExecutor, context).Result}\n");
+            Console.WriteLine($"Digital Rising (prev/cur) [{digitalContextRising.PreviousValue} - {digitalContextRising.CurrentValue}] --> {risingEdgeHandler.Handle(risingEdgeRuleExecutor, digitalContextRising).CurrentState}\n");
         }
 
-        private static void ExecuteDigitalFallingEdgeRules()
+        private static void ExecuteDigitalFallingEdgeRules(PointRuleContext digitalContextFalling)
         {
-            var context = new PointRuleContext { Key = "432234145142314_8973", IsEnabled = true, AlarmOnZero = true, CurrentValue = 1, PreviousValue = 0 };
-
             var fallingEdgeHandler =
                 _container
                     .GetAllInstances(typeof(IRuleHandler<DigitalFallingEdgeRuleExecutor, RuleExecutionResponse>))
@@ -141,7 +164,7 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(DigitalFallingEdgeRuleExecutor));
 
             // Returns whether the current value is less than the previous value
-            Console.WriteLine($"[{context.PreviousValue} < {context.CurrentValue}] --> {fallingEdgeHandler.Handle(fallingEdgeRuleExecutor, context).Result}\n");
+            Console.WriteLine($"Digital Falling (prev/cur) [{digitalContextFalling.PreviousValue} - {digitalContextFalling.CurrentValue}] --> {fallingEdgeHandler.Handle(fallingEdgeRuleExecutor, digitalContextFalling).CurrentState}\n");
         }
     }
 }

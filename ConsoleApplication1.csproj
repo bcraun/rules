@@ -85,9 +85,9 @@
     <Compile Include="RuleExecutors\DigitalRisingEdgeRuleExecutor.cs" />
     <Compile Include="RuleExecutors\HighWarningRuleExecutor.cs" />
     <Compile Include="Interfaces\IRuleEngine.cs" />
-    <Compile Include="Interfaces\RuleEngine.cs" />
+    <Compile Include="RuleEngine\RuleEngine.cs" />
     <Compile Include="Interfaces\IRuleExecutor.cs" />
-    <Compile Include="RuleMediatorPipeline.cs" />
+    <Compile Include="RuleExecutors\RuleMediatorPipeline.cs" />
     <Compile Include="RuleEngine\RuleExecutionResponse.cs" />
     <Compile Include="RuleEngine\BaseCondition.cs" />
     <Compile Include="RuleEngine\BaseRule.cs" />

@@ -5,6 +5,13 @@
         Normal = 0,
         OutOfAlarm,
         Low,
-        High
+        High,
+        LowWarning,
+        HighWarning,
+        LowAlarm,
+        HighAlarm,
+        DigitalRisingEdgeDetect,
+        DigitalFallingEdgeDetect,
+        Disabled
     }
 }

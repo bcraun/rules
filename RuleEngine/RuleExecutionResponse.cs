@@ -1,8 +1,21 @@
 ﻿namespace ConsoleApplication1
 {
-    public class RuleExecutionResponse : IRuleExecutor
+    public class RuleExecutionResponse : IRuleExecutionResponse
     {
-        public bool Result { get; set; }
         public CurrentStateType CurrentState { get; set; }
+
+        public RuleExecutionResponse()
+        {
+            CurrentState = CurrentStateType.Normal;
+        }
+    }
+
+    public interface IRuleExecutionResponse
+    {
+    }
+
+    public class ScaledRuleExecutionResponse : IRuleExecutionResponse
+    {
+        public IRuleContext<double> Context { get; set; }
     }
 }

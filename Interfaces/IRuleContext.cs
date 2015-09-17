@@ -33,5 +33,7 @@ namespace ConsoleApplication1
         bool NotifyOnZero { get; set; }
 
         bool NotifyOnOne { get; set; }
+
+        T ScaledValue { get; set; }
     }
 }

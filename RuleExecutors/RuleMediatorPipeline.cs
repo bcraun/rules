@@ -2,15 +2,15 @@ namespace ConsoleApplication1
 {
     public class RuleMediatorPipeline<TRequest, TResponse>
         : IRuleHandler<TRequest, TResponse>
-        where TRequest : IRuleExecutor
+        where TRequest : IRuleExecutor where TResponse : class, new()
     {
-        private readonly IPreRuleHandler<TRequest>[] _preRuleHandlers;
+        private readonly IPreRuleHandler<TRequest, TResponse>[] _preRuleHandlers;
         private readonly IRuleHandler<TRequest, TResponse> _inner;
         private readonly IPostRuleHandler<TRequest, TResponse>[] _postRuleHandlers;
 
         public RuleMediatorPipeline(
             IRuleHandler<TRequest, TResponse> inner,
-            IPreRuleHandler<TRequest>[] preRuleHandlers,
+            IPreRuleHandler<TRequest, TResponse>[] preRuleHandlers,
             IPostRuleHandler<TRequest, TResponse>[] postRuleHandlers
             )
         {
@@ -25,20 +25,23 @@ namespace ConsoleApplication1
 
             if (ctx.IsEnabled)
             {
+                TResponse result;
+
                 foreach (var preRequestHandler in _preRuleHandlers)
                 {
-                    preRequestHandler.Handle(executor, context);
+                    result = preRequestHandler.Handle(executor, context);
                 }
 
-                var result = _inner.Handle(executor, context);
+                result = _inner.Handle(executor, context);
 
                 foreach (var postRequestHandler in _postRuleHandlers)
                 {
-                    postRequestHandler.Handle(executor, context, result);
+                    result = postRequestHandler.Handle(executor, context, result);
                 }
 
                 return result;
             }
+
             return default(TResponse);
         }
     }

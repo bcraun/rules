@@ -62,5 +62,8 @@ namespace ConsoleApplication1
 
         [DataMember]
         public bool NotifyOnOne { get; set; }
+
+        [DataMember]
+        public double ScaledValue { get; set; }
     }
 }

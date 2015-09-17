@@ -8,13 +8,19 @@ namespace ConsoleApplication1
     /// <typeparam name="T"></typeparam>
     public abstract class BaseCondition<T> : ICondition<T>
     {
+        #region Properties
+
         /// <summary>
         /// Gets the threshold.
         /// </summary>
         /// <value>
         /// The threshold.
         /// </value>
-        protected T Threshold { get; }
+        protected T Threshold { get; private set; }
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseCondition{T}"/> class.
@@ -24,6 +30,10 @@ namespace ConsoleApplication1
         {
             Threshold = threshold;
         }
+
+        #endregion
+
+        #region ICondition<int> Members
 
         /// <summary>
         /// Determines whether this instance is satisfied.
@@ -42,6 +52,10 @@ namespace ConsoleApplication1
         /// </value>
         public T Value { get; set; }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
@@ -56,7 +70,9 @@ namespace ConsoleApplication1
                 Threshold,
                 " V:",
                 Value
-                );
+            );
         }
+
+        #endregion
     }
 }

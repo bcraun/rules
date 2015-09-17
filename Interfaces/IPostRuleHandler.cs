@@ -2,7 +2,7 @@
 {
     public interface IPostRuleHandler<TRuleExecutor, TResponse>
     {
-        void Handle(
+        TResponse Handle(
             TRuleExecutor executor, 
             IRuleContext<double> context, 
             TResponse response);

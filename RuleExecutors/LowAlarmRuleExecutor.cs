@@ -27,7 +27,14 @@ namespace ConsoleApplication1
             var ruleEngine = _engineFactory.Make(actual);
             ruleEngine.Add(rule);
 
-            return new RuleExecutionResponse { Result = ruleEngine.MatchAny() };
+            var result = new RuleExecutionResponse();
+            // TODO: Interpret the result and update the RuleExecutionResponse enum
+            if (ruleEngine.MatchAny())
+            {
+                result.CurrentState = CurrentStateType.LowAlarm;
+            }
+
+            return result;
         }
     }
 }

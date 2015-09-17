@@ -1,7 +1,7 @@
 ﻿namespace ConsoleApplication1
 {
     /// <summary>
-    /// Defines the expected members of a Condition object
+    /// Defines the expected membeers of a Condition object
     /// </summary>
     public interface ICondition<T>
     {

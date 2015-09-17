@@ -1,11 +1,15 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ConsoleApplication1
 {
+    /// <summary>
+    /// This is the base that all Rule objectss should in herit from
+    /// </summary>
+    /// <typeparam name="T">The Type of the object that the rule applies to</typeparam>
     public abstract class BaseRule<T> : IRule<T>
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets the value to apply the rule against.
         /// </summary>
@@ -20,7 +24,7 @@ namespace ConsoleApplication1
         /// <value>
         /// The conditions.
         /// </value>
-        public IList<ICondition<T>> Conditions { get; }
+        public IList<ICondition<T>> Conditions { get; private set; }
 
         /// <summary>
         /// Gets (or privately sets) the threshold.
@@ -29,6 +33,10 @@ namespace ConsoleApplication1
         /// The threshold.
         /// </value>
         protected T Threshold { get; private set; }
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseRule{T}"/> class.
@@ -41,6 +49,10 @@ namespace ConsoleApplication1
             // Instantiate the conditions collection
             Conditions = new List<ICondition<T>>();
         }
+
+        #endregion
+
+        #region IRule<T> Members
 
         /// <summary>
         /// Clears all of the conditions.
@@ -66,7 +78,7 @@ namespace ConsoleApplication1
         /// <exception cref="System.NotImplementedException"></exception>
         public virtual bool MatchConditions()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -75,16 +87,68 @@ namespace ConsoleApplication1
         /// <returns><c>true</c> if all of the conditions are met for the specified value</returns>
         protected bool MatchAllConditions()
         {
-            return Conditions.All(rule => rule.IsSatisfied);
+            // We could use a lambda for ease, however in my case this project 
+            // is to be used by Unity 3D so we will need to be aware that some 
+            // Linq features are not available in all target langauges.
+            //return Conditions.All(rule => rule.IsSatisfied);
+
+            // Assume the conditions are all valid until proven otherwise
+            bool isValid = true;
+
+            // Start checking the conditions for any failures
+            foreach (ICondition<T> condition in Conditions)
+            {
+                // Set the value
+                condition.Value = Value;
+
+                if (!condition.IsSatisfied)
+                {
+                    // We have a failure so set flag...
+                    isValid = false;
+
+                    // ...and bug out of the loop for performance
+                    break;
+                }
+            }
+
+            // return the result
+            return isValid;
         }
 
         /// <summary>
-        /// Matches any of the rules.
+        /// Matcheses any of the rules.
         /// </summary>
         /// <returns><c>true</c> if any of the conditions are met for the specified value</returns>
         protected bool MatchesAnyCondition()
         {
-            return Conditions.Any(rule => rule.IsSatisfied);
+            // We could use a lambda for ease, however in my case this project 
+            // is to be used by Unity 3D so we will need to be aware that some 
+            // Linq features are not available in all target langauges.
+            //return Conditions.Any(rule => rule.IsSatisfied);
+
+            // Assume the conditions are NOT valid until proven otherwise
+            bool isValid = false;
+
+            // Start checking the conditions for any failures
+            foreach (ICondition<T> condition in Conditions)
+            {
+                // Set the value
+                condition.Value = Value;
+
+                if (condition.IsSatisfied)
+                {
+                    // We have a pass so set flag...
+                    isValid = true;
+
+                    // ...and bug out of the loop for performance
+                    break;
+                }
+            }
+
+            // return the result
+            return isValid;
         }
+
+        #endregion
     }
 }

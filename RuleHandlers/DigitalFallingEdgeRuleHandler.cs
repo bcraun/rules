@@ -9,7 +9,7 @@ namespace ConsoleApplication1
         {
             return ((PointRuleContext)context).AlarmOnZero ? 
                 executor.ExecuteRule(context) : 
-                default(RuleExecutionResponse);
+                new RuleExecutionResponse { CurrentState = CurrentStateType.Disabled };
         }
     }
 }
