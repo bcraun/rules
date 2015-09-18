@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ConsoleApplication1
@@ -78,7 +79,7 @@ namespace ConsoleApplication1
         /// <exception cref="System.NotImplementedException"></exception>
         public virtual bool MatchConditions()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <summary>

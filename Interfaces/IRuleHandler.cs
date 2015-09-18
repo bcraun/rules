@@ -4,7 +4,7 @@
         where TRuleExecutor : IRuleExecutor
     {
         TResponse Handle(
-            TRuleExecutor executor, 
+            TRuleExecutor executor,
             IRuleContext<double> context);
     }
 }

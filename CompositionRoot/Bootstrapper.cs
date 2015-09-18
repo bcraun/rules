@@ -1,5 +1,6 @@
 ﻿using System;
 using SimpleInjector;
+using SimpleInjector.Diagnostics;
 
 namespace ConsoleApplication1.CompositionRoot
 {
@@ -8,6 +9,15 @@ namespace ConsoleApplication1.CompositionRoot
         public static Container Compose()
         {
             var container = new Container();
+
+            container.Register(typeof(INetlinkServiceBusMessage), typeof(NetlinkPointNotificationMessage));
+            container.Register(typeof(IServiceBusQueueNameFactory), typeof(NotificationsServiceBusQueueNameFactory));
+            container.Register(typeof(IServiceBusConnectionStringFactory), typeof(NotificationsQueueConnectionStringFactory));
+            container.Register(
+                typeof (
+                    IServiceBusClient
+                        <IServiceBusQueueNameFactory, IServiceBusConnectionStringFactory,
+                            INetlinkServiceBusMessage>), typeof (NetlinkServiceBusClient));
 
             container.Register(typeof(IRuleEngineFactory<>), typeof(DoubleRuleEngineFactory));
             container.RegisterCollection(typeof(IRuleExecutionResponse), AppDomain.CurrentDomain.GetAssemblies());

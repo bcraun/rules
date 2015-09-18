@@ -31,7 +31,7 @@ namespace ConsoleApplication1
             // TODO: Interpret the result and update the RuleExecutionResponse enum
             if (ruleEngine.MatchAny())
             {
-                result.CurrentState = CurrentStateType.LowAlarm;
+                result.CurrentState = CurrentStateType.AnalogLowAlarm;
             }
 
             return result;

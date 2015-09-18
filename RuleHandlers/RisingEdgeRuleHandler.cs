@@ -1,13 +1,13 @@
 namespace ConsoleApplication1
 {
-    public class LowAlarmRuleHandler : 
-        IRuleHandler<LowAlarmRuleExecutor, RuleExecutionResponse>
+    public class RisingEdgeRuleHandler : 
+        IRuleHandler<RisingEdgeRuleExecutor, RuleExecutionResponse>
     {
         public RuleExecutionResponse Handle(
-            LowAlarmRuleExecutor executor, 
+            RisingEdgeRuleExecutor executor, 
             IRuleContext<double> context)
         {
-            return ((PointRuleContext)context).LowAlarmEnabled ? 
+            return ((PointRuleContext)context).NotificationLevel > 0 ?
                 executor.ExecuteRule(context) :
                 new RuleExecutionResponse { CurrentState = CurrentStateType.PointDisabled };
         }

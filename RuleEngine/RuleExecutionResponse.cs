@@ -13,9 +13,4 @@
     public interface IRuleExecutionResponse
     {
     }
-
-    public class ScaledRuleExecutionResponse : IRuleExecutionResponse
-    {
-        public IRuleContext<double> Context { get; set; }
-    }
 }

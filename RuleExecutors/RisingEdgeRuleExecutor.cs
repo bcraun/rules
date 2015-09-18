@@ -2,12 +2,12 @@
 
 namespace ConsoleApplication1
 {
-    public class DigitalRisingEdgeRuleExecutor : IRuleExecutor
+    public class RisingEdgeRuleExecutor : IRuleExecutor
     {
         private readonly IRuleEngineFactory<double> _engineFactory;
         private IRuleFactory<double>[] RuleFactory { get; }
 
-        public DigitalRisingEdgeRuleExecutor(
+        public RisingEdgeRuleExecutor(
             IRuleFactory<double>[] ruleFactory, 
             IRuleEngineFactory<double> engineFactory)
         {
@@ -20,7 +20,7 @@ namespace ConsoleApplication1
             var pointContext = (PointRuleContext)context;
 
             double actual = pointContext.CurrentValue;
-            double previous = pointContext.PreviousValue;
+            double previous = pointContext.LastValue;
 
             var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleGreaterThanRuleFactory)).Make(previous);
 
@@ -31,7 +31,7 @@ namespace ConsoleApplication1
             // TODO: Interpret the result and update the RuleExecutionResponse enum
             if (ruleEngine.MatchAny())
             {
-                result.CurrentState = CurrentStateType.DigitalRisingEdgeDetect;
+                //result.CurrentState = CurrentStateType.;
             }
 
             return result;

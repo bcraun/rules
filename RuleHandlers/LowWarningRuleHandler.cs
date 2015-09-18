@@ -9,7 +9,7 @@ namespace ConsoleApplication1
         {
             return ((PointRuleContext)context).LowWarningEnabled ? 
                 executor.ExecuteRule(context) :
-                new RuleExecutionResponse {CurrentState = CurrentStateType.Disabled};
+                new RuleExecutionResponse {CurrentState = CurrentStateType.PointDisabled};
         }
     }
 }

@@ -5,6 +5,7 @@
         void Handle(
             TRuleExecutor executor, 
             IRuleContext<double> context, 
-            TResponse response);
+            TResponse response,
+            IServiceBusClient<IServiceBusQueueNameFactory, IServiceBusConnectionStringFactory, INetlinkServiceBusMessage> serviceBusClient);
     }
 }

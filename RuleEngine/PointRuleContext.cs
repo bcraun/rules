@@ -7,7 +7,7 @@ namespace ConsoleApplication1
     public class PointRuleContext : IRuleContext<double>
     {
         [DataMember]
-        public string Key { get; set; }
+        public object SourceKey { get; set; }
 
         [DataMember]
         public int PointId { get; set; }
@@ -16,13 +16,10 @@ namespace ConsoleApplication1
         public bool InAlarm { get; set; }
 
         [DataMember]
-        public DateTime LastReceiveUTC { get; set; }
-
-        [DataMember]
         public double CurrentValue { get; set; }
 
         [DataMember]
-        public double PreviousValue { get; set; }
+        public double LastValue { get; set; }
 
         [DataMember]
         public bool IsEnabled { get; set; }
@@ -52,18 +49,15 @@ namespace ConsoleApplication1
         public double LowWarningValue { get; set; }
 
         [DataMember]
-        public bool AlarmOnZero { get; set; }
+        public int NotificationLevel { get; set; }
 
         [DataMember]
-        public bool AlarmOnOne { get; set; }
+        public DateTime LastReceiveUtc { get; set; }
 
         [DataMember]
-        public bool NotifyOnZero { get; set; }
+        public int BooleanAlarmState { get; set; }
 
         [DataMember]
-        public bool NotifyOnOne { get; set; }
-
-        [DataMember]
-        public double ScaledValue { get; set; }
+        public bool BooleanAlarmEnabled { get; set; }
     }
 }

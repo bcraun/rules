@@ -1,12 +1,16 @@
+using System;
+
 namespace ConsoleApplication1
 {
     public interface IRuleContext<T> where T: struct
     {
-        string Key { get; set; }
+        object SourceKey { get; set; }
+
+        int PointId { get; set; }
 
         T CurrentValue { get; set; }
 
-        T PreviousValue { get; set; }
+        T LastValue { get; set; }
 
         bool IsEnabled { get; set; }
 
@@ -26,14 +30,12 @@ namespace ConsoleApplication1
 
         T LowWarningValue { get; set; }
 
-        bool AlarmOnZero { get; set; }
+        int NotificationLevel { get; set; }
 
-        bool AlarmOnOne { get; set; }
+        DateTime LastReceiveUtc { get; set; }
 
-        bool NotifyOnZero { get; set; }
+        int BooleanAlarmState { get; set; }
 
-        bool NotifyOnOne { get; set; }
-
-        T ScaledValue { get; set; }
+        bool BooleanAlarmEnabled { get; set; }
     }
 }
