@@ -79,7 +79,7 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(HighAlarmRuleExecutor));
 
             // Returns whether the current value is greater than the threshold value
-            Console.WriteLine($"High Alarm (threshold/cur) [{analogContext.HighAlarmValue} - {analogContext.ScaledValue}] --> {highAlarmHandler.Handle(highAlarmRuleExecutor, analogContext).CurrentState}\n");
+            Console.WriteLine($"High Alarm (threshold/cur) [{analogContext.HighAlarmValue} - {analogContext.CurrentValue}] --> {highAlarmHandler.Handle(highAlarmRuleExecutor, analogContext).CurrentState}\n");
         }
 
         private static void ExecuteLowAlarmRules(PointRuleContext analogContext)
@@ -96,7 +96,7 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(LowAlarmRuleExecutor));
 
             // Returns whether the threshold value is less than the current value
-            Console.WriteLine($"Low Alarm (threshold/cur) [{analogContext.LowAlarmValue} - {analogContext.ScaledValue}] --> {lowAlarmHandler.Handle(lowAlarmRuleExecutor, analogContext).CurrentState}\n");
+            Console.WriteLine($"Low Alarm (threshold/cur) [{analogContext.LowAlarmValue} - {analogContext.CurrentValue}] --> {lowAlarmHandler.Handle(lowAlarmRuleExecutor, analogContext).CurrentState}\n");
         }
 
         private static void ExecuteHighWarningRules(PointRuleContext analogContext)
@@ -113,7 +113,7 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(HighWarningRuleExecutor));
 
             // Returns whether the current value is greater than the threshold value
-            Console.WriteLine($"High Warning (threshold/cur) [{analogContext.HighWarningValue} - {analogContext.ScaledValue}] --> {highWarningHandler.Handle(highWarningRuleExecutor, analogContext).CurrentState}\n");
+            Console.WriteLine($"High Warning (threshold/cur) [{analogContext.HighWarningValue} - {analogContext.CurrentValue}] --> {highWarningHandler.Handle(highWarningRuleExecutor, analogContext).CurrentState}\n");
         }
 
         private static void ExecuteLowWarningRules(PointRuleContext analogContext)
@@ -130,7 +130,7 @@ namespace ConsoleApplication1
                         .First(i => i.GetType() == typeof(LowWarningRuleExecutor));
 
             // Returns whether the threshold value is less than the current value
-            Console.WriteLine($"Low Warning (threshold/cur) [{analogContext.LowWarningValue} - {analogContext.ScaledValue}] --> {lowWarningHandler.Handle(lowWarningRuleExecutor, analogContext).CurrentState}\n");
+            Console.WriteLine($"Low Warning (threshold/cur) [{analogContext.LowWarningValue} - {analogContext.CurrentValue}] --> {lowWarningHandler.Handle(lowWarningRuleExecutor, analogContext).CurrentState}\n");
         }
 
         private static void ExecuteDigitalRisingEdgeRules(PointRuleContext digitalContextRising)

@@ -1,8 +1,8 @@
 ﻿namespace ConsoleApplication1
 {
-    public interface IPreRuleHandler<TRuleExecutor, TResponse>
+    public interface IPreRuleHandler<TRuleExecutor>
     {
-        TResponse Handle(
+        void Handle(
             TRuleExecutor executor, 
             IRuleContext<double> context);
     }
