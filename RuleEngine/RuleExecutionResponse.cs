@@ -9,8 +9,4 @@
             CurrentState = CurrentStateType.Normal;
         }
     }
-
-    public interface IRuleExecutionResponse
-    {
-    }
 }

@@ -47,7 +47,7 @@ namespace ConsoleApplication1
         /// Initializes a new instance of the <see cref="RuleEngine"/> class
         /// with the specified rule set.
         /// </summary>
-        /// <param name="ruleSet"> the rule set to initialise with.</param>
+        /// <param name="ruleSet"> the rule set to initialize with.</param>
         public RuleEngine(List<IRule<T>> ruleSet)
         {
             RuleSet = ruleSet;
@@ -57,7 +57,7 @@ namespace ConsoleApplication1
         /// Initializes a new instance of the <see cref="RuleEngine"/> class
         /// with the specified rule set.
         /// </summary>
-        /// <param name="ruleSet"> the rule set to initialise with.</param>
+        /// <param name="ruleSet"> the rule set to initialize with.</param>
         /// <param name="actualValue">The actual value.</param>
         public RuleEngine(List<IRule<T>> ruleSet, T actualValue)
             : this(ruleSet)

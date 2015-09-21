@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -33,12 +33,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.ServiceBus.3.0.3\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.7.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.5.0.2\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=3.0.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
@@ -50,6 +74,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,19 +86,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Azure\INetlinkServiceBusMessage.cs" />
-    <Compile Include="Azure\IServiceBusQueueNameFactory.cs" />
-    <Compile Include="Azure\IServiceBusClient.cs" />
-    <Compile Include="Azure\IServiceBusConnectionStringFactory.cs" />
-    <Compile Include="Azure\NetlinkPointNotificationMessage.cs" />
-    <Compile Include="Azure\NotificationsQueueConnectionStringFactory.cs" />
-    <Compile Include="Azure\NotificationsServiceBusQueueNameFactory.cs" />
-    <Compile Include="Azure\NetlinkServiceBusClient.cs" />
+    <Compile Include="Azure\Interfaces\INetlinkServiceBusMessage.cs" />
+    <Compile Include="Azure\Interfaces\IServiceBusQueueNameFactory.cs" />
+    <Compile Include="Azure\Interfaces\IServiceBusClient.cs" />
+    <Compile Include="Azure\Interfaces\IServiceBusConnectionStringFactory.cs" />
+    <Compile Include="Azure\Messages\NetlinkPointNotificationMessage.cs" />
+    <Compile Include="Azure\Factories\ConnectionStringFactory.cs" />
+    <Compile Include="Azure\Factories\QueueNameFactory.cs" />
+    <Compile Include="Azure\ServiceBusQueue\AzureServiceBusClient.cs" />
+    <Compile Include="Azure\StorageQueue\AzureStorageQueueClient.cs" />
     <Compile Include="CompositionRoot\Bootstrapper.cs" />
+    <Compile Include="RuleConditions\BooleanEqualToCondition.cs" />
+    <Compile Include="RuleConditions\IntegerEqualToCondition.cs" />
+    <Compile Include="RuleEngine\BooleanEqualToRuleFactory.cs" />
+    <Compile Include="RuleEngine\BooleanRuleEngineFactory.cs" />
     <Compile Include="RuleEngine\DoubleRuleEngineFactory.cs" />
-    <Compile Include="RuleHandlers\FallingEdgePostRuleHandler.cs" />
-    <Compile Include="RuleHandlers\FallingEdgePreRuleHandler.cs" />
-    <Compile Include="RuleHandlers\FallingEdgeRuleHandler.cs" />
+    <Compile Include="Interfaces\IRuleExecutionResponse.cs" />
+    <Compile Include="RuleEngine\IntegerEqualToRuleFactory.cs" />
+    <Compile Include="RuleEngine\IntegerRuleEngineFactory.cs" />
+    <Compile Include="RuleHandlers\AlarmDetectPostRuleHandler.cs" />
+    <Compile Include="RuleHandlers\AlarmDetectPreRuleHandler.cs" />
+    <Compile Include="RuleHandlers\AlarmDetectRuleHandler.cs" />
     <Compile Include="RuleHandlers\HighWarningPostRuleHandler.cs" />
     <Compile Include="RuleHandlers\HighWarningPreRuleHandler.cs" />
     <Compile Include="RuleHandlers\LowAlarmRuleHandler.cs" />
@@ -79,18 +115,16 @@
     <Compile Include="RuleHandlers\LowWarningRuleHandler.cs" />
     <Compile Include="RuleHandlers\LowWarningPostRuleHandler.cs" />
     <Compile Include="RuleHandlers\LowWarningPreRuleHandler.cs" />
-    <Compile Include="RuleHandlers\RisingEdgePostRuleHandler.cs" />
-    <Compile Include="RuleHandlers\RisingEdgePreRuleHandler.cs" />
-    <Compile Include="RuleHandlers\RisingEdgeRuleHandler.cs" />
     <Compile Include="RuleHandlers\HighWarningRuleHandler.cs" />
     <Compile Include="Interfaces\IRuleContext.cs" />
     <Compile Include="Interfaces\IRuleEngineFactory.cs" />
     <Compile Include="RuleEngine\CurrentStateType.cs" />
     <Compile Include="RuleEngine\PointRuleContext.cs" />
-    <Compile Include="RuleExecutors\FallingEdgeRuleExecutor.cs" />
+    <Compile Include="RuleExecutors\AlarmDetectRuleExecutor.cs" />
     <Compile Include="RuleExecutors\LowAlarmRuleExecutor.cs" />
     <Compile Include="RuleExecutors\LowWarningRuleExecutor.cs" />
     <Compile Include="RuleConditions\DoubleEqualToCondition.cs" />
+    <Compile Include="Rules\BooleanEqualToRule.cs" />
     <Compile Include="Rules\DoubleEqualToRule.cs" />
     <Compile Include="RuleEngine\DoubleEqualToRuleFactory.cs" />
     <Compile Include="RuleConditions\DoubleGreaterThanCondition.cs" />
@@ -104,7 +138,6 @@
     <Compile Include="RuleEngine\IntegerLessThanRuleFactory.cs" />
     <Compile Include="Interfaces\IRuleFactory.cs" />
     <Compile Include="RuleExecutors\HighAlarmRuleExecutor.cs" />
-    <Compile Include="RuleExecutors\RisingEdgeRuleExecutor.cs" />
     <Compile Include="RuleExecutors\HighWarningRuleExecutor.cs" />
     <Compile Include="Interfaces\IRuleEngine.cs" />
     <Compile Include="RuleEngine\RuleEngine.cs" />
@@ -118,6 +151,7 @@
     <Compile Include="RuleHandlers\HighAlarmRuleHandler.cs" />
     <Compile Include="Interfaces\ICondition.cs" />
     <Compile Include="RuleConditions\IntegerGreaterThanCondition.cs" />
+    <Compile Include="Rules\IntegerEqualToRule.cs" />
     <Compile Include="Rules\IntegerGreaterThanRule.cs" />
     <Compile Include="Interfaces\IPostRuleHandler.cs" />
     <Compile Include="Interfaces\IPreRuleHandler.cs" />

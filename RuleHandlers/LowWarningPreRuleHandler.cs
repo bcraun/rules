@@ -1,13 +1,16 @@
-﻿namespace ConsoleApplication1
+﻿using System.Threading.Tasks;
+
+namespace ConsoleApplication1
 {
     public class LowWarningPreRuleHandler : 
         IPreRuleHandler<LowWarningRuleExecutor>
     {
-        public void Handle(
+        public async Task HandleASync(
             LowWarningRuleExecutor executor, 
-            IRuleContext<double> context)
+            IRuleContext context)
         {
-            // TODO: Implement point value scaling which updates the context with scaled value
+            // Implement if needed
+            await Task.FromResult(true);
         }
     }
 }

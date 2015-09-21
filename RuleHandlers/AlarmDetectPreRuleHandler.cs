@@ -1,13 +1,12 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class HighAlarmPreRuleHandler : 
-        IPreRuleHandler<HighAlarmRuleExecutor>
+    public class AlarmDetectPreRuleHandler : 
+        IPreRuleHandler<AlarmDetectRuleExecutor>
     {
         public async Task HandleASync(
-            HighAlarmRuleExecutor executor, 
+            AlarmDetectRuleExecutor executor, 
             IRuleContext context)
         {
             // Implement if needed

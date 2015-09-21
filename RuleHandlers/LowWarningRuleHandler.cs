@@ -1,15 +1,19 @@
+using System.Threading.Tasks;
+
 namespace ConsoleApplication1
 {
     public class LowWarningRuleHandler : 
         IRuleHandler<LowWarningRuleExecutor, RuleExecutionResponse>
     {
-        public RuleExecutionResponse Handle(
+        public RuleExecutionResponse HandleAsync(
             LowWarningRuleExecutor executor, 
-            IRuleContext<double> context)
+            IRuleContext context)
         {
-            return ((PointRuleContext)context).LowWarningEnabled ? 
-                executor.ExecuteRule(context) :
-                new RuleExecutionResponse {CurrentState = CurrentStateType.PointDisabled};
+            if (context.IsEnabled)
+            {
+                return executor.ExecuteRuleAsync(context);
+            }
+            return new RuleExecutionResponse { CurrentState = CurrentStateType.PointDisabled };
         }
     }
 }

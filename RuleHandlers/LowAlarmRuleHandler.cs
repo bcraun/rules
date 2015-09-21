@@ -1,15 +1,19 @@
+using System.Threading.Tasks;
+
 namespace ConsoleApplication1
 {
     public class LowAlarmRuleHandler : 
         IRuleHandler<LowAlarmRuleExecutor, RuleExecutionResponse>
     {
-        public RuleExecutionResponse Handle(
+        public RuleExecutionResponse HandleAsync(
             LowAlarmRuleExecutor executor, 
-            IRuleContext<double> context)
+            IRuleContext context)
         {
-            return ((PointRuleContext)context).LowAlarmEnabled ? 
-                executor.ExecuteRule(context) :
-                new RuleExecutionResponse { CurrentState = CurrentStateType.PointDisabled };
+            if (context.IsEnabled)
+            {
+                return executor.ExecuteRuleAsync(context);
+            }
+            return new RuleExecutionResponse { CurrentState = CurrentStateType.PointDisabled };
         }
     }
 }

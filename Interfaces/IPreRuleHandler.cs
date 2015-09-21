@@ -1,9 +1,11 @@
-﻿namespace ConsoleApplication1
+﻿using System.Threading.Tasks;
+
+namespace ConsoleApplication1
 {
     public interface IPreRuleHandler<TRuleExecutor>
     {
-        void Handle(
+        Task HandleASync(
             TRuleExecutor executor, 
-            IRuleContext<double> context);
+            IRuleContext context);
     }
 }

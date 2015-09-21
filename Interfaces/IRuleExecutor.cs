@@ -14,11 +14,12 @@
 //
 // </copyright>
 
+using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
     public interface IRuleExecutor
     {
-        // Marker interface
+//        IRuleExecutionResponse ExecuteRuleAsync(IRuleContext context);
     }
 }

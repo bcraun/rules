@@ -2,7 +2,7 @@
 
 namespace ConsoleApplication1
 {
-    public class NotificationsQueueConnectionStringFactory : IServiceBusConnectionStringFactory
+    public class ConnectionStringFactory : IServiceBusConnectionStringFactory
     {
         public string Make()
         {

@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class HighWarningRuleExecutor : IRuleExecutor
+    public class HighWarningRuleExecutor : IRuleExecutor    //<RuleExecutionResponse>
     {
         private readonly IRuleEngineFactory<double> _engineFactory;
         private IRuleFactory<double>[] RuleFactory { get; }
@@ -15,11 +16,11 @@ namespace ConsoleApplication1
             RuleFactory = ruleFactory;
         }
 
-        public RuleExecutionResponse ExecuteRule(IRuleContext<double> context)
+        public RuleExecutionResponse ExecuteRuleAsync(IRuleContext context)
         {
             var pointContext = (PointRuleContext) context;
 
-            double actual = pointContext.CurrentValue;
+            double actual = (double) pointContext.CurrentValue;
             double threshold = pointContext.HighWarningValue;
 
             var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleGreaterThanRuleFactory)).Make(threshold);

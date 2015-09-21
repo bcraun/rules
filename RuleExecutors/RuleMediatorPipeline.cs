@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace ConsoleApplication1
 {
     public class RuleMediatorPipeline<TRequest, TResponse>
@@ -32,9 +34,9 @@ namespace ConsoleApplication1
         /// <remarks>Caller should evaluate return value for null  
         /// since default(TResponse) can be null in some cases.
         /// </remarks>
-        public TResponse Handle(
+        public TResponse HandleAsync(
             TRequest executor, 
-            IRuleContext<double> context)
+            IRuleContext context)
         {
             var ctx = (PointRuleContext)context;
 
@@ -42,25 +44,20 @@ namespace ConsoleApplication1
             {
                 foreach (var preRequestHandler in _preRuleHandlers)
                 {
-                    preRequestHandler.Handle(executor, context);
+                    preRequestHandler.HandleASync(executor, context);
                 }
 
-                TResponse result = _inner.Handle(executor, context);
+                TResponse result = _inner.HandleAsync(executor, context);
 
                 foreach (var postRequestHandler in _postRuleHandlers)
                 {
-                    postRequestHandler.Handle(executor, context, result, _serviceBusClient);
+                    postRequestHandler.HandleAsync(executor, context, result, _serviceBusClient);
                 }
 
                 return result;
             }
 
             return default(TResponse);
-
-//            var rer = new RuleExecutionResponse { CurrentState = CurrentStateType.PointDisabled };
-//            var type = rer.GetType();
-//            var tresponse = Convert.ChangeType(rer, type);
-//            return (TResponse) tresponse;
         }
     }
 }

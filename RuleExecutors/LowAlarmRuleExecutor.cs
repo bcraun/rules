@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
@@ -15,11 +16,11 @@ namespace ConsoleApplication1
             RuleFactory = ruleFactory;
         }
 
-        public RuleExecutionResponse ExecuteRule(IRuleContext<double> context)
+        public RuleExecutionResponse ExecuteRuleAsync(IRuleContext context)
         {
             var pointContext = (PointRuleContext)context;
 
-            double actual = pointContext.CurrentValue;
+            double actual = (double) pointContext.CurrentValue;
             double threshold = pointContext.LowAlarmValue;
 
             var rule = RuleFactory.First(r => r.GetType() == typeof(DoubleLessThanRuleFactory)).Make(threshold);

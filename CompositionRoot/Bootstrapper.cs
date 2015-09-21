@@ -1,6 +1,6 @@
 ﻿using System;
+using ConsoleApplication1.Azure.StorageQueue;
 using SimpleInjector;
-using SimpleInjector.Diagnostics;
 
 namespace ConsoleApplication1.CompositionRoot
 {
@@ -11,14 +11,16 @@ namespace ConsoleApplication1.CompositionRoot
             var container = new Container();
 
             container.Register(typeof(INetlinkServiceBusMessage), typeof(NetlinkPointNotificationMessage));
-            container.Register(typeof(IServiceBusQueueNameFactory), typeof(NotificationsServiceBusQueueNameFactory));
-            container.Register(typeof(IServiceBusConnectionStringFactory), typeof(NotificationsQueueConnectionStringFactory));
+            container.Register(typeof(IServiceBusQueueNameFactory), typeof(QueueNameFactory));
+            container.Register(typeof(IServiceBusConnectionStringFactory), typeof(ConnectionStringFactory));
             container.Register(
                 typeof (
                     IServiceBusClient
                         <IServiceBusQueueNameFactory, IServiceBusConnectionStringFactory,
-                            INetlinkServiceBusMessage>), typeof (NetlinkServiceBusClient));
+                            INetlinkServiceBusMessage>), typeof (AzureStorageQueueClient));
 
+            container.Register(typeof(IRuleEngineFactory<>), typeof(BooleanRuleEngineFactory));
+            container.Register(typeof(IRuleEngineFactory<>), typeof(IntegerRuleEngineFactory));
             container.Register(typeof(IRuleEngineFactory<>), typeof(DoubleRuleEngineFactory));
             container.RegisterCollection(typeof(IRuleExecutionResponse), AppDomain.CurrentDomain.GetAssemblies());
             container.RegisterCollection(typeof(IPreRuleHandler<>), AppDomain.CurrentDomain.GetAssemblies());

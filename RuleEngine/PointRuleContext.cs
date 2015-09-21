@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace ConsoleApplication1
 {
     [DataContract]
-    public class PointRuleContext : IRuleContext<double>
+    public class PointRuleContext : IRuleContext
     {
         [DataMember]
         public object SourceKey { get; set; }
@@ -16,10 +16,10 @@ namespace ConsoleApplication1
         public bool InAlarm { get; set; }
 
         [DataMember]
-        public double CurrentValue { get; set; }
+        public object CurrentValue { get; set; }
 
         [DataMember]
-        public double LastValue { get; set; }
+        public object LastValue { get; set; }
 
         [DataMember]
         public bool IsEnabled { get; set; }

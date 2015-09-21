@@ -1,10 +1,12 @@
-﻿namespace ConsoleApplication1
+﻿using System.Threading.Tasks;
+
+namespace ConsoleApplication1
 {
     public interface IPostRuleHandler<TRuleExecutor, TResponse>
     {
-        void Handle(
+        Task HandleAsync(
             TRuleExecutor executor, 
-            IRuleContext<double> context, 
+            IRuleContext context, 
             TResponse response,
             IServiceBusClient<IServiceBusQueueNameFactory, IServiceBusConnectionStringFactory, INetlinkServiceBusMessage> serviceBusClient);
     }

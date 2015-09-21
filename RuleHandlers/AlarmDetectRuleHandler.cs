@@ -1,19 +1,20 @@
+using System;
 using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class HighWarningRuleHandler : 
-        IRuleHandler<HighWarningRuleExecutor, RuleExecutionResponse>
+    public class AlarmDetectRuleHandler : 
+        IRuleHandler<AlarmDetectRuleExecutor, RuleExecutionResponse>
     {
         public RuleExecutionResponse HandleAsync(
-            HighWarningRuleExecutor executor, 
+            AlarmDetectRuleExecutor executor, 
             IRuleContext context)
         {
             if (context.IsEnabled)
             {
                 return executor.ExecuteRuleAsync(context);
             }
-            return new RuleExecutionResponse { CurrentState = CurrentStateType.PointDisabled };
+            return new RuleExecutionResponse {CurrentState = CurrentStateType.PointDisabled};
         }
     }
 }

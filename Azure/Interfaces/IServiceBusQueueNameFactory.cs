@@ -2,6 +2,6 @@
 {
     public interface IServiceBusQueueNameFactory
     {
-        string Create();
+        string Make();
     }
 }
